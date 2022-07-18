@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const LoadDestination = () => {
     return (
@@ -33,7 +34,7 @@ const LoadDestination = () => {
                         <h5 class="card-title font-weight-bold">Sajek Tour</h5>
                         <p class="card-text">2 Days-2 Nights</p>
                         <small className='text-secondary font-weight-bold'>6,000 BDT</small> <br />
-                        <a href="/" class="btn btn-danger btn-sm btn-block">Book Now</a>
+                        <NavLink to="/tour/order" class="btn btn-danger btn-sm btn-block">Book Now</NavLink>
                     </div>
                     </div>
                     </div>

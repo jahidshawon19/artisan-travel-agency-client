@@ -1,6 +1,7 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import './Home.css';
-import video from '../../video/Pexels Videos 1820193.mp4';
+// import video from '../../video/Pexels Videos 1820193.mp4';
 
 const Home = () => {
     return (
@@ -8,7 +9,7 @@ const Home = () => {
             <div className="hero">
 
                 <video autoPlay loop muted plays-inline class="home-video">
-                    <source src={video} type="video/mp4" />
+                    <source src="#" type="video/mp4" />
                 </video>
 
                 <nav class="home-nav">
@@ -22,7 +23,7 @@ const Home = () => {
                 <div className="content">
                     <h1>Artisan Trip</h1>
                     <div class="category">
-                         <a href="/">Tour Packages</a>
+                         <NavLink to="/tours">Tour Packages</NavLink>
                          <a href="/">ThemePark Booking</a>
                          <a href="/">Hajj & Umrah</a>
                     </div>
