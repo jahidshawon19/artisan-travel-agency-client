@@ -8,14 +8,17 @@ import NotFound from './components/NotFound/NotFound';
 import Profile from './components/Profile/Profile';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom/cjs/react-router-dom.min';
+import Login from './components/Login/Login';
 
-
+import  AuthProvider  from './context/AuthProvider';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 function App() {
   return (
     <div className="App">
- 
-        <Router>
+      <AuthProvider>
+        
+      <Router>
           <Switch>
             <Route exact path="/">
               <Home></Home>
@@ -25,12 +28,12 @@ function App() {
               <TourHome></TourHome>
             </Route>
 
-            <Route path="/tour/order">
+            <PrivateRoute path="/tour/order">
               <Order></Order>
-            </Route>
-            <Route path="/profile">
+            </PrivateRoute>
+            <PrivateRoute path="/profile">
               <Profile></Profile>
-            </Route>
+            </PrivateRoute>
 
             <Route path="/about">
               <About></About>
@@ -39,12 +42,19 @@ function App() {
             <Route path="/contact">
               <Contact></Contact>
             </Route>
+
+
+            <Route path="/login">
+              <Login></Login>
+            </Route>
+            
             <Route path="*">
               <NotFound></NotFound>
             </Route>
 
           </Switch>
         </Router>
+      </AuthProvider>
     </div>
   );
 }

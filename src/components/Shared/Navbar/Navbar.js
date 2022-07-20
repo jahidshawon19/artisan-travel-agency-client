@@ -1,8 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './Navbar.css';
+import useAuth from '../../../hooks/useAuth';
+
 
 const Navbar = () => {
+
+    const {loginUser,googleSignOut} = useAuth()
     return (
         <>
         <nav className="navbar navbar-dark navbar-expand-md fixed-top">
@@ -22,9 +26,28 @@ const Navbar = () => {
           <li className="nav-item">
             <NavLink className="nav-link" to="/contact">Contact</NavLink>
           </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/profile">MyProfile</NavLink>
-          </li>
+          
+
+            {
+              loginUser.email? 
+              <>
+               <li className="nav-item">
+              <NavLink className="nav-link" to="/profile">MyProfile</NavLink>
+              </li>
+              <li className="nav-item">
+              <button className='btn btn-outline-warning btn-sm' onClick={googleSignOut}>Log Out</button>
+              </li>
+              </>
+             
+              :
+              <li className="nav-item">
+             <NavLink className="nav-link" to="/login">Sign in</NavLink>
+            </li>
+
+            }
+          
+          
+        
         </ul>
       </div>
     </div>
