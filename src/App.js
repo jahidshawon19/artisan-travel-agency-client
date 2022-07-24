@@ -7,11 +7,12 @@ import Contact from './components/Contact/Contact';
 import NotFound from './components/NotFound/NotFound';
 import Profile from './components/Profile/Profile';
 
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom/cjs/react-router-dom.min';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Login from './components/Login/Login';
 
 import  AuthProvider  from './context/AuthProvider';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import AddPacakge from './components/Admin/AddPacakge/AddPacakge';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <PrivateRoute path="/tour/order">
               <Order></Order>
             </PrivateRoute>
+
             <PrivateRoute path="/profile">
               <Profile></Profile>
             </PrivateRoute>
@@ -46,6 +48,10 @@ function App() {
 
             <Route path="/login">
               <Login></Login>
+            </Route>
+
+            <Route path="/addPackage">
+                <AddPacakge></AddPacakge>
             </Route>
             
             <Route path="*">
