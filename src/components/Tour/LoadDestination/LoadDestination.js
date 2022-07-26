@@ -1,7 +1,14 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+
+import SingleTour from '../SingleTour/SingleTour';
 
 const LoadDestination = () => {
+    const [tourPackage, setTourPackage] = useState([])
+    useEffect(()=>{
+        fetch('http://localhost:8000/tourPackages')
+        .then(res => res.json())
+        .then(data=>setTourPackage(data))
+    },[])
     return (
         <>
             <div className="container py-5">
@@ -14,6 +21,7 @@ const LoadDestination = () => {
                 </div>
 
                 <div className="row">
+
                     <div className="col-lg-4"></div>
                     <div className="col-lg-4">
                         <form action="">
@@ -27,17 +35,12 @@ const LoadDestination = () => {
 
 
                 <div className="row mt-3">
-                    <div className="col-lg-3">
-                    <div class="card">
-                    <img src="https://images.pexels.com/photos/461956/pexels-photo-461956.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&dpr=1" class="card-img-top" alt="..." />
-                    <div class="card-body">
-                        <h5 class="card-title font-weight-bold">Sajek Tour</h5>
-                        <p class="card-text">2 Days-2 Nights</p>
-                        <small className='text-secondary font-weight-bold'>6,000 BDT</small> <br />
-                        <NavLink to="/tour/order" class="btn btn-danger btn-sm btn-block">Book Now</NavLink>
-                    </div>
-                    </div>
-                    </div>
+                        {
+                            tourPackage.map(tp => <SingleTour
+                                key={tp._id}
+                                tpData = {tp}
+                            ></SingleTour>)
+                        }
                 </div>
             </div>
         </>

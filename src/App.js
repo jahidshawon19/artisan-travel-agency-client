@@ -29,7 +29,7 @@ function App() {
               <TourHome></TourHome>
             </Route>
 
-            <PrivateRoute path="/tour/order">
+            <PrivateRoute path="/tour/order/:tourId">
               <Order></Order>
             </PrivateRoute>
 

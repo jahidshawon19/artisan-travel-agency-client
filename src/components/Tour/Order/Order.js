@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState }  from 'react';
 import Footer from '../../Shared/Footer/Footer';
 import Navbar from '../../Shared/Navbar/Navbar';
 // import Banner from '../Banner/Banner';
@@ -6,8 +6,21 @@ import Poster from '../Poster/Poster';
 import Faq from '../Faq/Faq';
 
 import './Order.css';
+import { useParams } from 'react-router-dom';
+import useAuth from '../../../hooks/useAuth';
 
 const Order = () => {
+    const {loginUser} = useAuth()
+
+    const {tourId} = useParams()
+
+    const [singleTour, setSingleTour] = useState({})
+
+    useEffect(()=>{
+        fetch(`http://localhost:8000/tourPackages/${tourId}`)
+        .then(res=>res.json())
+        .then(data=>setSingleTour(data))
+    }, [])
     return (
         <>
             <Navbar></Navbar>
@@ -16,10 +29,10 @@ const Order = () => {
                 <div className="row py-5 mt-5">
                     <div className="col-lg-5">
                     <div class="card">
-                    <img src="https://images.pexels.com/photos/461956/pexels-photo-461956.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&dpr=1" class="card-img-top" alt="..." />
+                    <img src={singleTour.photo} class="card-img-top" alt="..." />
                     <div class="card-body">
                         <div className="card-text">
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam magni aliquid nobis illum fugiat nostrum. Veritatis iste eaque provident minima natus aliquam quam dignissimos consectetur inventore laboriosam? Expedita sed sapiente, ea velit, provident quia optio sit voluptatem quasi facere voluptatibus.
+                                {singleTour.details}
                         </div>
                     </div>
                     </div>
@@ -57,6 +70,11 @@ const Order = () => {
                                     <label for="exampleInputEmail1">Date</label>
                                     <input type="date" class="form-control" />
                                 </div>
+
+                                <div class="form-group d-none">
+                                   
+                                    <input type="text" class="form-control" value={singleTour.packageName} />
+                                </div>
                                
 
 
@@ -65,7 +83,7 @@ const Order = () => {
                            <div className="col-lg-6">
                            <div class="form-group">
                                     <label for="exampleInputEmail1">Full Name</label>
-                                    <input type="text" class="form-control" />
+                                    <input type="text" class="form-control" value={loginUser.displayName} />
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Mobile Number</label>
@@ -73,7 +91,7 @@ const Order = () => {
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Email</label>
-                                    <input type="email" class="form-control" />
+                                    <input type="email" class="form-control" value={loginUser.email} />
                                 </div>
                                   <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Address</label>

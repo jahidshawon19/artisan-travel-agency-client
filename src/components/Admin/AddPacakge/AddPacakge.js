@@ -1,8 +1,10 @@
-import axios from 'axios';
-import React, { useRef } from 'react';
+
+import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import AdminNav from '../AdminNav/AdminNav';
 
 const AddPacakge = () => {
+    const [tourPackage, setTourPackage] = useState([])
 
     const packageNameRef = useRef();
     const packageRef = useRef();
@@ -54,13 +56,22 @@ const AddPacakge = () => {
     }
 
 
+
+    
+    useEffect(()=>{
+        fetch('http://localhost:8000/tourPackages')
+        .then(res => res.json())
+        .then(data=>setTourPackage(data))
+    },[])
+
+
     return (
         <>
             <AdminNav></AdminNav>
             <section className='py-5 mt-5'>
             <div className="container">
                 <div className="row">
-                    <div className="col-lg-7">
+                    <div className="col-lg-5">
                         <h5 className='text-primary'>Add New Tour Package</h5>
                         <hr />
                         <div className="card">
@@ -121,6 +132,36 @@ const AddPacakge = () => {
                             </form>
                             </div>
                         </div>
+                    </div>
+
+                    <div className="col-lg-7 mt-5">
+                    <table className="table table-bordered">
+                        <thead>
+                            <tr>
+                            <th scope="col">Package Name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Duration</th>
+                            <th scope="col">Action</th>
+                           
+                            </tr>
+                        </thead>
+                            <tbody>
+                                {
+                                    tourPackage.map((tp)=>(
+                                        <tr>
+                                        
+                                        <td>{tp.packageName}</td>
+                                        <td>{tp.price}</td>
+                                        <td>{tp.packageDuration}</td>
+                                       
+                                        
+                                        <td><Link to="" className='btn btn-outline-primary btn-sm'>Update</Link> ||<Link to="" className='btn btn-outline-warning btn-sm'>Delete</Link> </td>
+                                        </tr>
+                                    ))
+                                }
+
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
