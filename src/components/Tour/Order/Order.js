@@ -1,4 +1,4 @@
-import React, { useEffect, useState }  from 'react';
+import React, { useEffect, useState, useRef }  from 'react';
 import Footer from '../../Shared/Footer/Footer';
 import Navbar from '../../Shared/Navbar/Navbar';
 // import Banner from '../Banner/Banner';
@@ -14,7 +14,75 @@ const Order = () => {
 
     const {tourId} = useParams()
 
-    const [singleTour, setSingleTour] = useState({})
+    const [singleTour, setSingleTour] = useState({}) 
+
+    const packageNameRef = useRef();
+    const priceRef = useRef();
+    const TouristNameRef = useRef();
+    const TouristEmailRef = useRef();
+    const TouristMobileRef = useRef();
+    const personRef = useRef();
+    const paymentMethodRef = useRef();
+    const transactionIdRef = useRef();
+    const dateRef = useRef();
+    const addressRef = useRef();
+    const cityRef = useRef();
+
+    const handleTourOrder = e =>{
+        const packageName = packageNameRef.current.value;
+        const unitPrice = priceRef.current.value;
+        const intUnitPrice = parseInt(unitPrice) 
+        const TouristName= TouristNameRef.current.value;
+        const TouristEmail = TouristEmailRef.current.value;
+        const TouristMobile = TouristMobileRef.current.value;
+        const person = personRef.current.value;
+        const intPerson = parseInt(person)
+        const totalBill = parseInt(intUnitPrice*intPerson)
+        
+        const paymentMethod = paymentMethodRef.current.value;
+        const transactionId = transactionIdRef.current.value;
+        const date = dateRef.current.value;
+        const address = addressRef.current.value;
+        const city = cityRef.current.value;
+
+
+        const newTourOrder = {
+            'packageName':packageName, 
+            'TouristName':TouristName,
+            'TouristEmail':TouristEmail,
+            'TouristMobile':TouristMobile,
+            'person':intPerson,
+            'totalBill':totalBill,
+            'paymentMethod':paymentMethod,
+            'transactionId':transactionId,
+            'date':date,
+            'address':address,
+            'city':city,
+        
+        }
+
+        
+
+        fetch('http://localhost:8000/orderTour', {
+            method: 'POST',
+            headers: {
+              'content-type' : 'application/json',
+            },
+            body: JSON.stringify(newTourOrder)
+          })
+            .then(res => res.json())
+            .then(data =>{
+                if(data.insertedId){
+                    alert('Your Order Submitted Successfully. We Will Call You Soon.Thanl You')
+                    e.target.reset()
+                }
+            })
+
+        e.preventDefault();
+        
+    }
+
+
 
     useEffect(()=>{
         fetch(`http://localhost:8000/tourPackages/${tourId}`)
@@ -38,23 +106,20 @@ const Order = () => {
                     </div>
                     </div>
                     <div className="col-lg-7">
-                        <form action="" method="POST">
+                        <form action="" method="POST" onSubmit={handleTourOrder}>
                             <div className="row">
                                 
                            <div className="col-lg-6">
 
-                                <div class="form-group">
+                                <div class="form-group" >
                                     <label for="exampleInputEmail1">Person</label>
-                                    <input type="number" class="form-control" />
+                                    <input type="number" class="form-control" ref={personRef} />
                                 </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Total Bill</label>
-                                    <input type="number" class="form-control"  />
-                                </div>
+                               
 
                                 <div class="form-group">
                                 <label for="floatingSelect">Select Online Payment Method</label>
-                                <select class="form-control" id="floatingSelect" aria-label="Floating label select example">
+                                <select class="form-control" id="floatingSelect" aria-label="Floating label select example" ref={paymentMethodRef}>
                                     
                                     <option value="1">Bikash</option>
                                     <option value="2">Nogadh</option>
@@ -64,16 +129,17 @@ const Order = () => {
                             </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Transaction ID</label>
-                                    <input type="text" class="form-control" />
+                                    <input type="text" class="form-control" ref={transactionIdRef} />
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Date</label>
-                                    <input type="date" class="form-control" />
+                                    <input type="date" class="form-control" ref={dateRef} />
                                 </div>
 
                                 <div class="form-group d-none">
                                    
-                                    <input type="text" class="form-control" value={singleTour.packageName} />
+                                    <input type="text" class="form-control" value={singleTour.packageName} ref={packageNameRef} />
+                                    <input type="number" class="form-control" value={singleTour.price} ref={priceRef} />
                                 </div>
                                
 
@@ -83,33 +149,33 @@ const Order = () => {
                            <div className="col-lg-6">
                            <div class="form-group">
                                     <label for="exampleInputEmail1">Full Name</label>
-                                    <input type="text" class="form-control" value={loginUser.displayName} />
+                                    <input type="text" class="form-control" value={loginUser.displayName} ref={TouristNameRef} />
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Mobile Number</label>
-                                    <input type="text" class="form-control" />
+                                    <input type="text" class="form-control" ref={TouristMobileRef} />
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Email</label>
-                                    <input type="email" class="form-control" value={loginUser.email} />
+                                    <input type="email" class="form-control" value={loginUser.email} ref={TouristEmailRef} />
                                 </div>
                                   <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Address</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" ref={addressRef}></textarea>
                                 </div>
 
                                 <div class="form-group">
                                 <label for="floatingSelect">City</label>
-                                <select class="form-control" id="floatingSelect" aria-label="Floating label select example">
+                                <select class="form-control" id="floatingSelect" aria-label="Floating label select example" ref={cityRef}>
                                     
-                                    <option value="1">Agrabadh</option>
-                                    <option value="2">Dewan Hat</option>
-                                    <option value="3">Lalkhan Bazar</option>
-                                    <option value="4">GEC</option>
-                                    <option value="5">2 No Gate</option>
-                                    <option value="5">Muradpur</option>
-                                    <option value="6">Bahaddarhat</option>
-                                    <option value="7">Chawkbazar</option>
+                                    <option value="Agrabadh">Agrabadh</option>
+                                    <option value="Dewan Hat">Dewan Hat</option>
+                                    <option value="Lalkhan Bazar">Lalkhan Bazar</option>
+                                    <option value="GEC">GEC</option>
+                                    <option value="2 No Gate">2 No Gate</option>
+                                    <option value="Muradpur">Muradpur</option>
+                                    <option value="Bahaddarhat">Bahaddarhat</option>
+                                    <option value="Chawkbazar">Chawkbazar</option>
                                 </select>
                            
                             </div>

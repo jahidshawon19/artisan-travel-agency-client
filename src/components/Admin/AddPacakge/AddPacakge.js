@@ -17,8 +17,8 @@ const AddPacakge = () => {
     const handleAddTourPackage = e =>{
         const packageName = packageNameRef.current.value; 
         const packageDuration = packageRef.current.value ;
-        const price = priceRef.current.value ;
-        const photo = photoRef.current.value ;
+        const price = priceRef.current.value;
+        const photo = photoRef.current.value;
         const details = detailsRef.current.value; 
 
         const newTourPackage = {'packageName':packageName, 'packageDuration':packageDuration,'price':price,'photo':photo,'details':details}
@@ -100,7 +100,7 @@ const AddPacakge = () => {
                                                                          
                                         <div className="form-group">
                                             <label>Price</label>
-                                            <input type="text" className="form-control" ref={priceRef} />
+                                            <input type="number" className="form-control" ref={priceRef} />
                                             
                                         </div>
 
