@@ -13,6 +13,8 @@ import Login from './components/Login/Login';
 import  AuthProvider  from './context/AuthProvider';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import AddPacakge from './components/Admin/AddPacakge/AddPacakge';
+import AdminHome from './components/Admin/AdminHome/AdminHome';
+import OrderDetails from './components/Admin/OrderDetails/OrderDetails';
 
 function App() {
   return (
@@ -52,6 +54,14 @@ function App() {
 
             <Route path="/addPackage">
                 <AddPacakge></AddPacakge>
+            </Route>
+
+            <Route path="/adminhome">
+                <AdminHome></AdminHome>
+            </Route>
+
+            <Route path="/order/:orderId">
+                <OrderDetails></OrderDetails>
             </Route>
             
             <Route path="*">

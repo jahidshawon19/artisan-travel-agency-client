@@ -23,13 +23,7 @@ const AddPacakge = () => {
 
         const newTourPackage = {'packageName':packageName, 'packageDuration':packageDuration,'price':price,'photo':photo,'details':details}
         
-        // axios.post('http://localhost:8000/tourPackage', newTourPackage)
-        //  .then(res =>{
-        //     if(res.newTourPackage.insertedId){
-        //         alert('New Tour Package Added Successfully')
-        //         e.target.reset()
-        //     }
-        //  })
+   
 
 
 
@@ -65,12 +59,29 @@ const AddPacakge = () => {
     },[])
 
 
+
+    const handleDeletePackage = (id)=>{
+        const url = `http://localhost:8000/tourPackages/${id}`
+        fetch(url, {
+            method:'DELETE'
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            if(data.deletedCount){
+                const remainingTourPackage = tourPackage.filter(tp=>tp._id !== id)
+                setTourPackage(remainingTourPackage)
+            }
+
+        })
+    }
+
     return (
         <>
             <AdminNav></AdminNav>
             <section className='py-5 mt-5'>
             <div className="container">
                 <div className="row">
+
                     <div className="col-lg-5">
                         <h5 className='text-primary'>Add New Tour Package</h5>
                         <hr />
@@ -134,6 +145,8 @@ const AddPacakge = () => {
                         </div>
                     </div>
 
+
+
                     <div className="col-lg-7 mt-5">
                     <table className="table table-bordered">
                         <thead>
@@ -153,9 +166,10 @@ const AddPacakge = () => {
                                         <td>{tp.packageName}</td>
                                         <td>{tp.price}</td>
                                         <td>{tp.packageDuration}</td>
+                                      
                                        
                                         
-                                        <td><Link to="" className='btn btn-outline-primary btn-sm'>Update</Link> ||<Link to="" className='btn btn-outline-warning btn-sm'>Delete</Link> </td>
+                                        <td><Link to="" className='btn btn-outline-primary btn-sm'>Update</Link> ||<button  className='btn btn-outline-warning btn-sm' onClick={()=>handleDeletePackage(tp._id)}>Delete</button> </td>
                                         </tr>
                                     ))
                                 }

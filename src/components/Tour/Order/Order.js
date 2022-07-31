@@ -89,6 +89,9 @@ const Order = () => {
         .then(res=>res.json())
         .then(data=>setSingleTour(data))
     }, [])
+
+
+    
     return (
         <>
             <Navbar></Navbar>
